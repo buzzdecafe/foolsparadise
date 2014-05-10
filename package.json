@@ -1,0 +1,29 @@
+{
+  "author": "Buzz de Cafe <m_hur@yahoo.com> (buzzdecafe.com)",
+  "name": "Fool's Paradise",
+  "description": "An implementation of the fantasy-land spec",
+  "version": "0.0.1",
+  "homepage": "https://www.github.com/buzzdecafe/foolsparadise",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/buzzdecafe/foolsparadise.git"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "dependencies": {
+    "ramda": "https://api.github.com/repos/Ramda/ramda/tarball"
+  },
+  "devDependencies": {
+    "gulp": "~3.5.0",
+    "gulp-util": "~2.2.14",
+    "gulp-concat": "~2.2.0",
+    "gulp-jshint": "~1.5.5",
+    "gulp-clean": "~0.2.4",
+    "gulp-jasmine": "~0.2.0",
+    "gulp-notify": "~1.2.5"
+  }
+}
+
+
