@@ -5,7 +5,6 @@ var jshint = require('gulp-jshint');
 var clean = require('gulp-clean');
 var jasmine = require('gulp-jasmine');
 var notify = require('gulp-notify');
-var browserify = require('browserify');
 
 gulp.task('clean', function() {
   return gulp.src('build', {read: false})
