@@ -9,10 +9,17 @@ var Monad = require("Monad");
 
 describe("Semigroup", function() {
 
+  var sg = Semigroup();
   it("has the correct interface", function() {
-
+    expect(typeof sg.concat).toBe('function');    
   });
 
+  describe("concat", function() {
+    it("takes a value of the same Semigroup, and must return a value of the same Semigroup.", function() {
+      var out = sg.concat(Semigroup());
+      expect(out.concat).toBeDefined();
+    });
+  });
 });
 
 describe("Monoid", function() {

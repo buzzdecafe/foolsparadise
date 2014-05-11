@@ -19,7 +19,7 @@ gulp.task('hint', function() {
 gulp.task('test', function() {
   gulp.src('src/js/*')
     .pipe(jshint());                
-  gulp.src('spec/*.js')
+  gulp.src('test/*.js')
     .pipe(jasmine());
 });
 
