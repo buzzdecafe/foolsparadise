@@ -1,18 +1,17 @@
-function Either(x) {
-  this.value = x;
+var util = require('./util');
+
+function Either(left, right) {
+  this.left = left;
+  this.right = right;
 }
+
 Either.prototype.map = function(f) {
-  
+  return (isNil(this.right)) ? this : new Either(this.left, f(this.right));
 };
 
-function Left(x) {
-  this.value = x;
-}
-Left.prototype = Object.create(Either.prototype);
+module.exports = function (left, right) {
+  return new Either(left, right);
+};
 
-function Right(x) {
-  this.value = x;
-}
-Right.prototype = Object.create(Either.prototype);
 
 
