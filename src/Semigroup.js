@@ -1,3 +1,0 @@
-var Identity = require('Identity');
-
-

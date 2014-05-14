@@ -9,9 +9,11 @@ Either.prototype.map = function(f) {
   return (isNil(this.right)) ? this : new Either(this.left, f(this.right));
 };
 
-module.exports = function (left, right) {
+Either.prototype.of = function(x) {
   return new Either(left, right);
 };
+
+module.exports = Either.prototype.of;
 
 
 
