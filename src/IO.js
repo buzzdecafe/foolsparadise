@@ -13,6 +13,9 @@ IO.prototype.map = function(f) {
   return new IO(this.value, compose(f, this.sideEffect));
 };
 
+IO.prototype.run = function() {
+  return this.sideEffect(this.value);
+};
 
 IO.prototype.of = IO.of;
 
