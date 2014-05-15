@@ -4,14 +4,16 @@ function Maybe(x) {
   this.value = x;
 }
 
+Maybe.of = function(x) {
+  return new Maybe(x);
+};
+
 Maybe.prototype.map = function(f) {
   return isNil(this.value) ? this : new Maybe(f(this.value));
 };
 
-Maybe.prototype.of = function(x) {
-  return new Maybe(x);
-};
+Maybe.prototype.of = Maybe.of;
 
-module.exports = Maybe.prototype.of;
+module.exports = Maybe.of;
 
 
