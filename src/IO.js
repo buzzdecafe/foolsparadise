@@ -1,3 +1,5 @@
+var compose = require("ramda").compose;
+
 function IO(value, run) {
   this.value = value;
   this.sideEffect = run;
