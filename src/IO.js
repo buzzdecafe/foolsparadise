@@ -1,25 +1,24 @@
 var compose = require("ramda").compose;
 
-function IO(value, run) {
-  this.value = value;
-  this.sideEffect = run;
+function IO(run) {
+  this.run = run;
 }
 
-IO.of = function(value, run) {
-  return new IO(value, run);
+IO.of = function(fn) {
+  return new IO(fn);
 };
 
 IO.prototype.map = function(f) {
-  return new IO(this.value, compose(f, this.sideEffect));
+  return new IO(f(this.run)).run();
 };
 
-IO.prototype.run = function() {
-  return this.sideEffect(this.value);
+IO.run = function(io) {
+  return io.run.apply(this, [].slice.call(arguments, 1));
 };
 
 IO.prototype.of = IO.of;
 
-module.exports = IO.of;
+module.exports = IO;
 
 
 
