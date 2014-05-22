@@ -12,9 +12,7 @@ IO.of = function(value) {
 
 IO.prototype.map = function(f) {
   var io = this;
-  return new IO(function() {
-    return f(io.run()).run();
-  });
+  return IO.of(f(io.run()));
 };
 
 IO.run = function(io) {
