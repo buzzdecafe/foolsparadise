@@ -13,7 +13,7 @@
     "test": "gulp test"
   },
   "dependencies": {
-    "ramda": "https://api.github.com/repos/Ramda/ramda/tarball"
+    "ramda": "~0.1.3"
   },
   "devDependencies": {
     "gulp": "~3.5.0",
