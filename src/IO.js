@@ -4,12 +4,17 @@ function IO(run) {
   this.run = run;
 }
 
-IO.of = function(fn) {
-  return new IO(fn);
+IO.of = function(value) {
+  return new IO(function() {
+    return value;
+  });
 };
 
 IO.prototype.map = function(f) {
-  return new IO(f(this.run)).run();
+  var io = this;
+  return new IO(function() {
+    return f(io.run()).run();
+  });
 };
 
 IO.run = function(io) {
