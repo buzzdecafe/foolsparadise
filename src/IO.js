@@ -1,6 +1,6 @@
 var compose = require("ramda").compose;
 
-function IO(run) {
+function IO(fn) {
   this.fn = fn;
 }
 
