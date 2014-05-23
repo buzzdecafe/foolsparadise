@@ -8,8 +8,8 @@ function Either(left, right) {
   this.right = right;
 }
 
-Either.of = function(value) {
-  return new Either(undefined, value);
+Either.of = function(value, err) {
+  return new Either(err, value);
 };
 
 Either.prototype.map = function(f) {
