@@ -1,12 +1,15 @@
 var isNil = require('./util').isNil;
 
 function Either(left, right) {
+  if (!(this instanceof Either)) {
+    return new Either(left, right);
+  }
   this.left = left;
   this.right = right;
 }
 
-Either.of = function(left, right) {
-  return new Either(left, right);
+Either.of = function(value) {
+  return new Either(undefined, value);
 };
 
 Either.prototype.map = function(f) {
@@ -15,7 +18,7 @@ Either.prototype.map = function(f) {
 
 Either.prototype.of = Either.of;
 
-module.exports = Either.of;
+module.exports = Either;
 
 
 
