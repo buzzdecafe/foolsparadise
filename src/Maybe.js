@@ -1,6 +1,9 @@
 var isNil = require('./util').isNil;
 
 function Maybe(x) {
+  if (!(this instanceof Maybe)) {
+    return new Maybe(x);
+  }
   this.value = x;
 }
 
@@ -14,6 +17,6 @@ Maybe.prototype.map = function(f) {
 
 Maybe.prototype.of = Maybe.of;
 
-module.exports = Maybe.of;
+module.exports = Maybe;
 
 

@@ -1,6 +1,9 @@
 var compose = require("ramda").compose;
 
 function IO(fn) {
+  if (!(this instanceof IO)) {
+    return new IO(fn);
+  }
   this.fn = fn;
 }
 
