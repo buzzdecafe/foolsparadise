@@ -1,4 +1,4 @@
-var isNil = require('./util').isNil;
+var isNil = require('../util').isNil;
 
 function Maybe(x) {
   if (!(this instanceof Maybe)) {

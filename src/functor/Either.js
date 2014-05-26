@@ -1,4 +1,4 @@
-var isNil = require('./util').isNil;
+var isNil = require('../util').isNil;
 
 function Either(left, right) {
   if (!(this instanceof Either)) {
