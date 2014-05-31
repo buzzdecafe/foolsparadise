@@ -18,9 +18,22 @@ IO.prototype.map = function(f) {
   return new IO(compose(f, io.fn));
 };
 
-IO.run = function(io) {
+IO.prototype.ap = function(app) {
+  return this.fn(app.value);
+};
+
+IO.prototype.chain = function(f) {
+  return new IO(function() { return f(this.value); });
+};
+
+IO.runIO = function(io) {
   return io.fn.apply(this, [].slice.call(arguments, 1));
 };
+
+IO.prototype.runIO = function() {
+  return IO.runIO(this);
+};
+
 
 IO.prototype.of = IO.of;
 
