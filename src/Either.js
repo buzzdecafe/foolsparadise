@@ -17,7 +17,10 @@ Either.prototype.map = function(f) {
 };
 
 Either.prototype.ap = function(app) {
-  return new Either(app.left, app.map(this.value));
+  if (typeof this.value !== 'function') {
+    throw new TypeError("Calling ap on an Either requires that the Either is wrapping a function");
+  }
+  return new Either(app.left, app.map(this.right));
 };
 
 // `f` must return a new Either; not sure if this impl is sufficient
