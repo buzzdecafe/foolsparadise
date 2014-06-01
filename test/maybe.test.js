@@ -40,10 +40,10 @@ describe('Maybe', function() {
     assert.equal(true, cTest.iface(m));
     assert.equal(true, cTest.associative(m, 
         function(x) {
-          return m.of(3 * x);
+          return Maybe(3 * x);
         },
         function(x) {
-          return m.of(5 + x);
+          return Maybe(5 + x);
         })
     );
     

@@ -58,7 +58,8 @@ module.exports = {
       return equals(obj.of(f).ap(obj.of(x)), obj.of(f(x)));
     },
     interchange: function(obj1, obj2, x) {
-      return equals(obj2.ap(obj1.of(x)), obj1.of(function(f) { return f(x); }).ap(obj2));
+      return equals(obj2.ap(obj1.of(x)), 
+                    obj1.of(function(f) { return f(x); }).ap(obj2));
     }
   },
   
