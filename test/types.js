@@ -1,3 +1,4 @@
+var R = require('ramda');
 
 function I(x) { return x; };
 
@@ -10,30 +11,26 @@ function getConstructor(obj) {
   return Object.getPrototypeOf(obj).constructor;
 }
 
-function isFunctor(obj, f, g) {
-  return typeof obj.map === 'function' &&
-         equals(obj, obj.map(I)) && // identity
-         equals(obj.map(function(x) { return f(g(x)); }), obj.map(g).map(f)); // composition
+var interfaces = {
+  functor: ['map'],
+  apply: interfaces.functor.concat(['ap']),
+  applicative: interfaces.apply.concat('of'),
+  chain: interfaces.apply.concat('of'),
+  monad: R.uniq(interfaces.chain.concat(interfaces.applicative))
+};
+
+function correctInterface(type) {
+  return function(obj) {
+    var methods = interfaces[type];
+    return R.all(function(method) {
+      return obj[method] && typeof obj[method] === 'function';
+    });
 }
 
-function isApply(obj, obj2) {
-  var C = getConstructor(obj);
-  /*isFunctor(obj) &&*/
-  return typeof obj.ap === 'function' &&
-         equals(obj.ap(obj2), C(obj.value(obj2.value)));
-}
-
-function isApplicative(obj, value) {
-  var C = Object.getPrototypeOf(obj).constructor;
-  return isApply(obj) &&
-         typeof obj.of === 'function' &&
-         equals(obj.of(value), new C(value));
-}
 
 function isChain(obj, f, g) {
-  return isApply(obj) &&
-         typeof obj.chain === 'function' &&
-         equals(obj.chain(f).chain(g), obj.chain(function(x) { return f(x).chain(g); }));
+  /* isApply */
+  return typeof obj.chain === 'function' &&
 }
 
 function isMonad(obj) {
@@ -42,10 +39,52 @@ function isMonad(obj) {
 
 
 module.exports = {
-  isFunctor: isFunctor,
-  isApply: isApply,
-  isApplicatove: isApplicative,
-  isChain: isChain,
-  isMonad: isMonad
+
+  functor: {
+    iface: correctIterface('functor'),
+    id: function(obj) { 
+      return equals(obj, obj.map(I));
+    },
+    compose: function(obj, f, g) {
+      return  equals(
+                obj.map(function(x) { return f(g(x)); }), 
+                obj.map(g).map(f)
+              );
+    }
+  },
+  
+  apply: {
+    iface: correctInterface('apply'),
+    compose: function(objF, objV, f, g) {
+      var C = Object.getPrototypeOf(obj).constructor;
+      return equals(objF.ap(objV), C(objF.value(objV.value)));
+    }
+  },
+  
+  applicative: {
+    iface: correctInterface('applicative'),
+    id: function(obj, obj2) {
+      return equals(obj.of(I).ap(obj2), obj2);
+    },
+    homomorphic: function(obj, f) {
+      return equals(a.of(f).ap(a.of(x)), a.of(f(x)));
+    },
+    interchange: function() {
+      return equals(u.ap(a.of(y)), a.of(function(f) { return f(y); }).ap(u));
+    }
+  },
+  
+  chain: {
+    iface: correctInterface('chain'),
+    associative: function(obj, f, g) {
+      return equals(obj.chain(f).chain(g), 
+                    obj.chain(function(x) { return f(x).chain(g); })
+             );
+    }
+  },
+  
+  monad: {
+    iface: correctInterface('monad')
+  }
 };
 

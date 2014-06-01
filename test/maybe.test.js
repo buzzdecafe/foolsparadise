@@ -18,6 +18,10 @@ describe('Maybe', function() {
     assert.equal(true, types.isApply(app1, app2));
   });
 
+  it('is an Applicative', function() {
+    var app = Maybe(101);
+    assert.equals(true, types.isApplicative(app, 101));
+  });
 });
 
 
