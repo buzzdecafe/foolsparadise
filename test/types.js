@@ -2,6 +2,7 @@
 function I(x) { return x; };
 
 function equals(a, b) {
+  console.log(a.value, 'equals', b.value); 
   return a.value === b.value;
 }
 
@@ -14,7 +15,7 @@ module.exports = {
   isFunctor: function(obj, f, g) {
       return typeof obj.map === 'function' &&
              equals(obj, obj.map(I)) && // identity
-             equals(obj.map(function(x) { return f(g(x)); }), obj.map(f).map(g)); // composition
+             equals(obj.map(function(x) { return f(g(x)); }), obj.map(g).map(f)); // composition
              // assert same types? JS won't help here...
              // 
   },
