@@ -21,7 +21,7 @@
     "gulp-concat": "~2.2.0",
     "gulp-jshint": "~1.5.5",
     "gulp-clean": "~0.2.4",
-    "gulp-jasmine": "~0.2.0",
+    "gulp-mocha": "~0.4.1",
     "gulp-notify": "~1.2.5"
   }
 }
