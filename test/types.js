@@ -43,8 +43,8 @@ module.exports = {
   
   apply: {
     iface: correctInterface('apply'),
-    compose: function(objF, objV, f, g) {
-      var C = Object.getPrototypeOf(obj).constructor;
+    compose: function(objF, objV) {
+      var C = Object.getPrototypeOf(objF).constructor;
       return equals(objF.ap(objV), C(objF.value(objV.value)));
     }
   },
@@ -54,11 +54,11 @@ module.exports = {
     id: function(obj, obj2) {
       return equals(obj.of(I).ap(obj2), obj2);
     },
-    homomorphic: function(obj, f) {
-      return equals(a.of(f).ap(a.of(x)), a.of(f(x)));
+    homomorphic: function(obj, f, x) {
+      return equals(obj.of(f).ap(obj.of(x)), obj.of(f(x)));
     },
-    interchange: function() {
-      return equals(u.ap(a.of(y)), a.of(function(f) { return f(y); }).ap(u));
+    interchange: function(obj1, obj2, x) {
+      return equals(obj2.ap(obj1.of(x)), obj1.of(function(f) { return f(x); }).ap(obj2));
     }
   },
   
