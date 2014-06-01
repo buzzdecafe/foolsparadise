@@ -9,18 +9,24 @@ describe('Maybe', function() {
   var m = Maybe(1);
 
   it('is a Functor', function() {
-    assert.equal(true, types.isFunctor(m, R.multiply(2), R.add(1)));
+    fTest = types.functor;
+    assert.equal(true, fTest.iface(m));
+    assert.equal(true, fTest.id(m));
+    assert.equal(true, fTest.compose(m, R.multiply(2), R.add(3)));
   });
 
   it('is an Apply', function() {
+    var aTest = types.apply;
     var app1 = Maybe(function(x) { return x * 10; });
     var app2 = Maybe(10);
-    assert.equal(true, types.isApply(app1, app2));
+
+    assert.equal(true, aTest.iface(app1));
   });
 
   it('is an Applicative', function() {
+    var aTest = types.applicative;
     var app = Maybe(101);
-    assert.equals(true, types.isApplicative(app, 101));
+    assert.equal(true, aTest.iface(app));
   });
 });
 

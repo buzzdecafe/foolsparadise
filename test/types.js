@@ -11,37 +11,25 @@ function getConstructor(obj) {
   return Object.getPrototypeOf(obj).constructor;
 }
 
-var interfaces = {
-  functor: ['map'],
-  apply: interfaces.functor.concat(['ap']),
-  applicative: interfaces.apply.concat('of'),
-  chain: interfaces.apply.concat('of'),
-  monad: R.uniq(interfaces.chain.concat(interfaces.applicative))
-};
+var interfaces = { functor: ['map'] };
+interfaces.apply = interfaces.functor.concat(['ap']);
+interfaces.applicative = interfaces.apply.concat(['of']);
+interfaces.chain = interfaces.apply.concat(['chain']);
+interfaces.monad = R.uniq(interfaces.chain.concat(interfaces.applicative));
 
 function correctInterface(type) {
   return function(obj) {
-    var methods = interfaces[type];
     return R.all(function(method) {
       return obj[method] && typeof obj[method] === 'function';
-    });
-}
-
-
-function isChain(obj, f, g) {
-  /* isApply */
-  return typeof obj.chain === 'function' &&
-}
-
-function isMonad(obj) {
-  return isApplicative(obj) && isChain(obj);
+    }, interfaces[type]);
+  };
 }
 
 
 module.exports = {
 
   functor: {
-    iface: correctIterface('functor'),
+    iface: correctInterface('functor'),
     id: function(obj) { 
       return equals(obj, obj.map(I));
     },
@@ -87,4 +75,5 @@ module.exports = {
     iface: correctInterface('monad')
   }
 };
+
 
