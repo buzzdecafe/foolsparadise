@@ -6,6 +6,7 @@ function Either(left, right) {
   }
   this.left = left;
   this.right = right;
+  this.value = this.right;
 }
 
 Either.of = function(value, err) {
@@ -17,10 +18,10 @@ Either.prototype.map = function(f) {
 };
 
 Either.prototype.ap = function(app) {
-  if (typeof this.value !== 'function') {
+  if (typeof this.right !== 'function') {
     throw new TypeError("Calling ap on an Either requires that the Either is wrapping a function");
   }
-  return new Either(app.left, app.map(this.right));
+  return app.map(this.right);
 };
 
 // `f` must return a new Either; not sure if this impl is sufficient

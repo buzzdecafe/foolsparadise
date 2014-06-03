@@ -45,7 +45,7 @@ module.exports = {
     iface: correctInterface('apply'),
     compose: function(objF, objV) {
       var C = Object.getPrototypeOf(objF).constructor;
-      return equals(objF.ap(objV), C(objF.value(objV.value)));
+      return equals(objF.ap(objV), C.of(objF.value(objV.value)));
     }
   },
   

@@ -34,11 +34,18 @@ describe('Maybe', function() {
     var app1 = Maybe(101);
     var app2 = Maybe(-123);
     var appF = Maybe(R.multiply(3));
+
     assert.equal(true, aTest.iface(app1));
     assert.equal(true, aTest.id(app1, app2));
     assert.equal(true, aTest.id(app1, maybeNull));
     assert.equal(true, aTest.homomorphic(app1, R.add(3), 46));
     assert.equal(true, aTest.interchange(app2, appF, 17));
+
+    assert.equal(true, aTest.iface(maybeNull));
+    assert.equal(true, aTest.id(maybeNull, Maybe(null)));
+    assert.equal(true, aTest.homomorphic(maybeNull, R.add(3), 46));
+    assert.equal(true, aTest.interchange(maybeNull, appF, 17));
+
   });
 
   it('is a Chain', function() {
