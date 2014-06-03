@@ -1,6 +1,6 @@
 var R = require('ramda');
 
-function I(x) { return x; };
+var I = R.identity;
 
 function equals(a, b) {
   console.log(a.value, 'equals', b.value); 
