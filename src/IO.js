@@ -23,7 +23,7 @@ IO.prototype.ap = function(app) {
 };
 
 IO.prototype.chain = function(f) {
-  return new IO(function() { return f(this.value); });
+  return new IO(function() { return f(this.fn()); });
 };
 
 IO.runIO = function(io) {
