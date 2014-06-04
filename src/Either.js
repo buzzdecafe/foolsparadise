@@ -6,7 +6,6 @@ function Either(left, right) {
   }
   this.left = left;
   this.right = right;
-  this.value = this.right;
 }
 
 Either.of = function(value, err) {
@@ -31,6 +30,10 @@ Either.prototype.chain = function(f) {
 
 
 Either.prototype.of = Either.of;
+
+Either.prototype.equals = function(that) {
+  return this.right === that.right;
+};
 
 module.exports = Either;
 

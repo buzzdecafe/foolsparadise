@@ -42,6 +42,11 @@ Maybe.prototype.chain = function(f) {
 // A value that implements the Monad specification must also implement the Applicative and Chain specifications.
 // see above.
 
+// equality method to enable testing
+Maybe.prototype.equals = function(that) {
+  return this.value === that.value;
+};
+
 module.exports = Maybe;
 
 
