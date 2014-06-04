@@ -17,11 +17,12 @@ describe('Either', function() {
 
   it('is an Apply', function() {
     var aTest = types.apply;
-    var app1 = Either("apply test fn", function(x) { return x * 10; });
-    var app2 = Either("apply test value", 10);
+    var appA = Either("apply test fn a", R.multiply(10));
+    var appU = Either("apply test fn u", R.add(5));
+    var appV = Either("apply test value v", 10);
 
-    assert.equal(true, aTest.iface(app1));
-    assert.equal(true, aTest.compose(app1, app2));
+    assert.equal(true, aTest.iface(appA));
+    assert.equal(true, aTest.compose(appA, appU, appV));
   });
 
   it('is an Applicative', function() {
