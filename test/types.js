@@ -2,15 +2,6 @@ var R = require('ramda');
 
 var I = R.identity;
 
-function equals(a, b) {
-  console.log(a.value, 'equals', b.value); 
-  return a.value === b.value;
-}
-
-function getConstructor(obj) {
-  return Object.getPrototypeOf(obj).constructor;
-}
-
 var interfaces = { functor: ['map'] };
 interfaces.apply = interfaces.functor.concat(['ap']);
 interfaces.applicative = interfaces.apply.concat(['of']);
@@ -31,40 +22,38 @@ module.exports = {
   functor: {
     iface: correctInterface('functor'),
     id: function(obj) { 
-      return equals(obj, obj.map(I));
+      return obj.equals(obj.map(I));
     },
     compose: function(obj, f, g) {
-      return  equals(
-                obj.map(function(x) { return f(g(x)); }), 
-                obj.map(g).map(f)
-              );
+      return obj.map(function(x) { return f(g(x)); })
+                .equals(obj.map(g).map(f));
     }
   },
   
   apply: {
     iface: correctInterface('apply'),
     compose: function(a, u, v) {
-      return equals(a.map(function(f) { 
-          return function(g) { 
-            return function(x) { 
-              return f(g(x));
-            }; 
-          }; 
-        }).ap(u).ap(v),
-        a.ap(u.ap(v)));
+      return a.ap(u.ap(v)).equals(
+               a.map(function(f) { 
+                 return function(g) { 
+                   return function(x) { 
+                     return f(g(x));
+                   }; 
+                 }; 
+               }).ap(u).ap(v));
     }
   },
   
   applicative: {
     iface: correctInterface('applicative'),
     id: function(obj, obj2) {
-      return equals(obj.of(I).ap(obj2), obj2);
+      return obj.of(I).ap(obj2).equals(obj2);
     },
     homomorphic: function(obj, f, x) {
-      return equals(obj.of(f).ap(obj.of(x)), obj.of(f(x)));
+      return obj.of(f).ap(obj.of(x)).equals(obj.of(f(x)));
     },
     interchange: function(obj1, obj2, x) {
-      return equals(obj2.ap(obj1.of(x)), 
+      return obj2.ap(obj1.of(x)).equals(
                     obj1.of(function(f) { return f(x); }).ap(obj2));
     }
   },
@@ -72,7 +61,7 @@ module.exports = {
   chain: {
     iface: correctInterface('chain'),
     associative: function(obj, f, g) {
-      return equals(obj.chain(f).chain(g), 
+      return obj.chain(f).chain(g).equals(
                     obj.chain(function(x) { return f(x).chain(g); })
              );
     }

@@ -51,7 +51,6 @@ describe('Either', function() {
     var mTest = types.monad;
     assert.equal(true, mTest.iface(e));
   });
-
 });
 
 
