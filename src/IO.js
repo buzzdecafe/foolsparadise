@@ -27,11 +27,11 @@ IO.prototype.chain = function(f) {
 };
 
 IO.runIO = function(io) {
-  return io.fn.apply(this, [].slice.call(arguments, 1));
+  return io.runIO.apply(io, arguments);
 };
 
 IO.prototype.runIO = function() {
-  return IO.runIO(this);
+  return this.fn.apply(this, arguments);
 };
 
 

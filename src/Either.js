@@ -17,22 +17,22 @@ Either.prototype.map = function(f) {
 };
 
 Either.prototype.ap = function(app) {
-  if (typeof this.right !== 'function') {
-    throw new TypeError("Calling ap on an Either requires that the Either is wrapping a function");
-  }
-  return app.map(this.right);
+  return isNil(this.right) ? this : app.map(this.right);
 };
 
 // `f` must return a new Either; not sure if this impl is sufficient
 Either.prototype.chain = function(f) {
-  return f(this.right);
+  return isNil(this.right) ? this : f(this.right);
 };
-
 
 Either.prototype.of = Either.of;
 
 Either.prototype.equals = function(that) {
   return this.right === that.right;
+};
+
+Either.equals = function(e1, e2) {
+  return e1.equals(e2);
 };
 
 module.exports = Either;

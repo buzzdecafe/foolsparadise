@@ -34,8 +34,7 @@ describe('Either', function() {
     assert.equal(true, aTest.iface(app1));
     assert.equal(true, aTest.id(app1, app2));
     assert.equal(true, aTest.homomorphic(app1, R.add(3), 46));
-    assert.equal(true, aTest.interchange(app2, appF, 17));
-
+    assert.equal(true, aTest.interchange(app1, appF, 17));
   });
 
   it('is a Chain', function() {
