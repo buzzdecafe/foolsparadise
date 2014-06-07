@@ -13,17 +13,24 @@ IO.of = function(value) {
   });
 };
 
-IO.prototype.map = function(f) {
+// `f` must return an IO
+IO.prototype.chain = function(f) {
   var io = this;
-  return new IO(compose(f, io.fn));
+  return new IO(function() { 
+    return f(io.fn()).fn(); 
+  });
+};
+
+IO.prototype.map = function(f) {
+  return this.chain(function(a) {
+    return IO.of(f(a));
+  });
 };
 
 IO.prototype.ap = function(app) {
-  return this.fn(app.value);
-};
-
-IO.prototype.chain = function(f) {
-  return new IO(function() { return f(this.fn()); });
+  return this.chain(function(f) {
+    return app.map(f);
+  });
 };
 
 IO.runIO = function(io) {
@@ -34,6 +41,9 @@ IO.prototype.runIO = function() {
   return this.fn.apply(this, arguments);
 };
 
+IO.prototype.equals = function(that) {
+  return this.fn() === that.fn();
+};
 
 IO.prototype.of = IO.of;
 
