@@ -16,15 +16,12 @@ IO.prototype.chain = function(f) {
 };
 
 IO.prototype.map = function(f) {
-  return this.chain(function(a) {
-    return IO.of(f(a));
-  });
+  var io = this;
+  return new IO(compose(f, io.fn));
 };
 
 IO.prototype.ap = function(app) {
-  return this.chain(function(f) {
-    return app.map(f);
-  });
+  return new IO(function() { this.fn(app.value); });
 };
 
 IO.runIO = function(io) {
