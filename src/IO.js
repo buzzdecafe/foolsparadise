@@ -20,15 +20,17 @@ IO.prototype.map = function(f) {
   return new IO(compose(f, io.fn));
 };
 
-IO.prototype.ap = function(app) {
-  return new IO(function() { this.fn(app.value); });
+IO.prototype.ap = function(value) {
+  var io = this;
+  return value.map(io.fn);
 };
 
 IO.runIO = function(io) {
-  return io.runIO.apply(io, arguments);
+  return io.runIO.apply(io, [].slice.call(arguments, 1));
 };
 
 IO.prototype.runIO = function() {
+  console.log(arguments);
   return this.fn.apply(this, arguments);
 };
 
@@ -42,12 +44,7 @@ IO.prototype.of = function(value) {
   });
 };
 
-IO.of = function(f) {
-  if (typeof f !== 'function') {
-    throw new TypeError('IO.of takes a function argument');
-  }
-  return IO(f).of(f);
-};
+IO.of = IO.prototype.of;
 
 module.exports = IO;
 

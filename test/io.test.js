@@ -22,9 +22,12 @@ describe('IO', function() {
 
   it('is an Apply', function() {
     var aTest = types.apply;
+    var a = IO(R.add(1));
+    var b = IO(R.multiply(2));
+    var c = IO(R.always(4));
 
     assert.equal(true, aTest.iface(i1));
-    assert.equal(true, aTest.compose(i1, i2, i3));
+    assert.equal(true, aTest.compose(a, b, c));
   });
 /*
   it('is an Applicative', function() {
