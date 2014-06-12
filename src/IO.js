@@ -20,10 +20,10 @@ IO.prototype.map = function(f) {
   return new IO(compose(f, io.fn));
 };
 
-IO.prototype.ap = function(value) {
-  var io = this;
+IO.prototype.ap = function(thatIo) {
+  var thisIo = this;
   return new IO(function() { 
-    io.fn(value)
+    thisIo.fn(thatIo);
   });
 };
 
