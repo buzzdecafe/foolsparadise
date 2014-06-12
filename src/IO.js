@@ -20,10 +20,10 @@ IO.prototype.map = function(f) {
   return new IO(compose(f, io.fn));
 };
 
+// `this` IO must wrap a function that takes an IO (`that`) as input
 IO.prototype.ap = function(thatIo) {
-  var thisIo = this;
-  return new IO(function() { 
-    thisIo.fn(thatIo);
+  return this.chain(function(f) {
+    return thatIo.map(f);
   });
 };
 
@@ -46,6 +46,7 @@ IO.prototype.of = function(fn) {
 IO.of = IO.prototype.of;
 
 IO.prototype.equals = function(that) {
+  console.log('this == that', this === that, 'this.fn === that.fn', this.fn === that.fn, IO.runIO(this) === IO.runIO(that));
   return this === that ||
          this.fn === that.fn ||
          IO.runIO(this) === IO.runIO(that);

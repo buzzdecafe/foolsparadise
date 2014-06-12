@@ -34,14 +34,20 @@ describe('IO', function() {
     var aTest = types.applicative;
 
     assert.equal(true, aTest.iface(i1));
-    assert.equal(true, aTest.id(i1, i2));
+    assert.equal(true, aTest.id(IO, i2));
 //    assert.equal(true, aTest.homomorphic(i1, R.add(3), 46));
 //    assert.equal(true, aTest.interchange(i2, i3, 17));
   });
 
   it('is a Chain', function() {
     var cTest = types.chain;
-    var c = IO(function() { return IO(function() { return IO(R.add(3)); }) });
+    var c = IO(function() { 
+      return IO(function() { 
+        return IO(function() { 
+          return 3; 
+        }); 
+      }); 
+    });
     assert.equal(true, cTest.iface(i1));
     assert.equal(true, cTest.associative(c, R.I, R.I));
   });
