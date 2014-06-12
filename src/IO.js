@@ -36,10 +36,11 @@ IO.prototype.runIO = function() {
   return this.fn.apply(this, arguments);
 };
 
-IO.prototype.of = function(value) {
-  return new IO(function() {
-    return value;
-  });
+IO.prototype.of = function(fn) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('IO.of requires a function argument. Got ' + typeof fn);
+  }
+  return new IO(fn);
 };
 
 IO.of = IO.prototype.of;
