@@ -22,7 +22,9 @@ IO.prototype.map = function(f) {
 
 IO.prototype.ap = function(value) {
   var io = this;
-  return value.map(io.fn);
+  return new IO(function() { 
+    io.fn(value)
+  });
 };
 
 IO.runIO = function(io) {
@@ -34,10 +36,6 @@ IO.prototype.runIO = function() {
   return this.fn.apply(this, arguments);
 };
 
-IO.prototype.equals = function(that) {
-  return this.fn() === that.fn();
-};
-
 IO.prototype.of = function(value) {
   return new IO(function() {
     return value;
@@ -45,6 +43,12 @@ IO.prototype.of = function(value) {
 };
 
 IO.of = IO.prototype.of;
+
+IO.prototype.equals = function(that) {
+  return this === that ||
+         this.fn === that.fn ||
+         IO.runIO(this) === IO.runIO(that);
+};
 
 module.exports = IO;
 

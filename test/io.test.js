@@ -29,29 +29,23 @@ describe('IO', function() {
     assert.equal(true, aTest.iface(i1));
     assert.equal(true, aTest.compose(a, b, c));
   });
-/*
+
   it('is an Applicative', function() {
     var aTest = types.applicative;
-    var app1 = IO(101);
-    var app2 = IO(-123);
-    var appF = IO(R.multiply(3));
 
-    assert.equal(true, aTest.iface(app1));
-    assert.equal(true, aTest.id(app1, app2));
-    assert.equal(true, aTest.id(app1, maybeNull));
-    assert.equal(true, aTest.homomorphic(app1, R.add(3), 46));
-    assert.equal(true, aTest.interchange(app2, appF, 17));
+    assert.equal(true, aTest.iface(i1));
+    assert.equal(true, aTest.id(i1, i2));
+//    assert.equal(true, aTest.homomorphic(i1, R.add(3), 46));
+//    assert.equal(true, aTest.interchange(i2, i3, 17));
   });
 
   it('is a Chain', function() {
     var cTest = types.chain;
-    var f1 = I;
-    var f2 = I;
-    var fNull = function() {return IO(null);};
-    assert.equal(true, cTest.iface(m));
-    assert.equal(true, cTest.associative(m, f1, f2));
+    var c = IO(function() { return IO(function() { return IO(R.add(3)); }) });
+    assert.equal(true, cTest.iface(i1));
+    assert.equal(true, cTest.associative(c, R.I, R.I));
   });
-*/
+
   it('is a Monad', function() {
     var mTest = types.monad;
     assert.equal(true, mTest.iface(i1));
