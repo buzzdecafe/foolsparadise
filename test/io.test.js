@@ -35,8 +35,8 @@ describe('IO', function() {
 
     assert.equal(true, aTest.iface(i1));
     assert.equal(true, aTest.id(IO, i2));
-//    assert.equal(true, aTest.homomorphic(i1, R.add(3), 46));
-//    assert.equal(true, aTest.interchange(i2, i3, 17));
+    assert.equal(true, aTest.homomorphic(i1, R.add(3), 46));
+    assert.equal(true, aTest.interchange(i2, i3, R.always(111)));
   });
 
   it('is a Chain', function() {

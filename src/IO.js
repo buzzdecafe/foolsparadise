@@ -20,7 +20,8 @@ IO.prototype.map = function(f) {
   return new IO(compose(f, io.fn));
 };
 
-// `this` IO must wrap a function that takes an IO (`that`) as input
+// `this` IO must wrap a function `f` that takes an IO (`thatIo`) as input
+// `f` must return an IO
 IO.prototype.ap = function(thatIo) {
   return this.chain(function(f) {
     return thatIo.map(f);
@@ -32,21 +33,18 @@ IO.runIO = function(io) {
 };
 
 IO.prototype.runIO = function() {
-  console.log(arguments);
+  //console.log(arguments);
   return this.fn.apply(this, arguments);
 };
 
-IO.prototype.of = function(fn) {
-  if (typeof fn !== 'function') {
-    throw new TypeError('IO.of requires a function argument. Got ' + typeof fn);
-  }
-  return new IO(fn);
+IO.prototype.of = function(x) {
+  return new IO(function() { return x; });
 };
 
 IO.of = IO.prototype.of;
 
+// this is really only to accommodate testing ....
 IO.prototype.equals = function(that) {
-  console.log('this == that', this === that, 'this.fn === that.fn', this.fn === that.fn, IO.runIO(this) === IO.runIO(that));
   return this === that ||
          this.fn === that.fn ||
          IO.runIO(this) === IO.runIO(that);
