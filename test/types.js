@@ -54,7 +54,7 @@ module.exports = {
     },
     interchange: function(obj1, obj2, x) {
       return obj2.ap(obj1.of(x)).equals(
-                    obj1.of(function(f) { return f(x); }).ap(obj2));
+             obj1.of(function(f) { return f(x); }).ap(obj2));
     }
   },
   
